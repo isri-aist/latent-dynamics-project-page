@@ -22,9 +22,13 @@
   </header>
 
   <main>
+    <section class="research-summary" aria-label="Research summary">
+      <h2>How can a robot adapt to visually identical objects with different physical properties?</h2>
+      <p>Learning latent physical properties from demonstrations and updating them online to guide manipulation.</p>
+    </section>
+
     <section class="section video-section" id="project-video">
       <h2>Video</h2>
-      <p class="section-lead">Locally embedded research overview. The video has not been published on an external platform.</p>
       <video controls preload="metadata" playsinline poster="assets/images/research-overview-poster.jpg">
         <source src="assets/videos/research-overview.mp4" type="video/mp4">
         Your browser does not support the video element.
@@ -34,11 +38,6 @@
     <section class="section narrow" id="abstract">
       <h2>Abstract</h2>
       <p>Manipulating visually identical objects with different physical properties requires adapting actions based on information acquired through interaction. We address the problem of learning from demonstrations how to adapt manipulation actions, such as regrasping and changing contact locations, based on physical-property information acquired during interaction. To this end, we propose a learning-from-demonstration method that learns latent representations of physical properties needed to predict object responses and conditions a policy on online estimates of these representations. A dynamics model and object-specific latent representations are jointly learned from demonstrations that include behaviors adapting to the objects’ physical properties, and the learned representations are then used to condition an imitation policy. During execution, the dynamics model and policy weights remain fixed, while the latent representation is updated based on the discrepancy between predicted and actual observations, allowing interaction with the object to inform action generation. Real-world and simulation experiments with objects whose centers of mass differ demonstrate that online adaptation through latent representations of physical properties improves task success rates.</p>
-    </section>
-
-    <section class="research-summary" aria-label="Research summary">
-      <h2>How can a robot adapt to visually identical objects with different physical properties?</h2>
-      <p>Learning latent physical properties from demonstrations and updating them online to guide manipulation.</p>
     </section>
 
     <section class="section method-section">
@@ -58,8 +57,7 @@
 
     <section class="section task-setup-section">
       <h2>Experiments: Task Setup</h2>
-      <p class="section-lead">The experiments evaluate Pouch Placement, Box Pushing, and Horizontal Lifting with objects whose centers of mass vary.</p>
-      <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/experiments-task-setup-poster.jpg" aria-label="Animated task setup for Pouch Placement, Box Pushing, and Horizontal Lifting, with weight positions and seen and unseen objects.">
+      <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/experiments-task-setup-poster.jpg" aria-label="Animated Pouch Placement, Box Pushing, and Horizontal Lifting task setup, including weight positions and seen and unseen objects.">
         <source src="assets/videos/simulation/experiments-task-setup.mp4" type="video/mp4">
       </video>
     </section>
@@ -143,9 +141,17 @@
 
     <section class="section simulation-section" id="simulation-video">
       <h2>Online Adaptation in Simulation</h2>
-      <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-final-slide.jpg">
-        <source src="assets/videos/simulation/online-adaptation-final-slide.mp4" type="video/mp4">
-      </video>
+      <div class="rollout-grid two-up simulation-media-grid">
+        <article class="rollout-card">
+          <h4>Simulated rollout</h4>
+          <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-rollout-poster.jpg"><source src="assets/videos/simulation/online-adaptation-rollout.mp4" type="video/mp4"></video>
+        </article>
+        <article class="rollout-card">
+          <h4>Online parameter estimate</h4>
+          <p>The estimate changes as the observed object response differs from the initial prediction.</p>
+          <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-estimate-poster.jpg"><source src="assets/videos/simulation/online-adaptation-estimate.mp4" type="video/mp4"></video>
+        </article>
+      </div>
     </section>
 
     <section class="section narrow" id="bibtex">
