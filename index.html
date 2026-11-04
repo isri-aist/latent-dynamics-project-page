@@ -64,7 +64,7 @@
 
     <section class="section rollout-section" id="teleoperation">
       <h2>Teleoperation Data Collection</h2>
-      <p class="section-lead">A separate demonstration segment showing the operator handling the pouch while collecting manipulation data.</p>
+      <p class="section-lead">After inserting the weight, data collection begins. The teleoperator first attempts the task assuming a uniform density, then adapts their actions to the object's physical properties as they become known.</p>
       <div class="rollout-card single-video">
         <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-teleoperation-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-teleoperation-2x.mp4" type="video/mp4"></video>
       </div>
@@ -86,10 +86,9 @@
             <figure class="figure"><img src="assets/images/simulation-results.png" alt="Horizontal Lifting success rates for standard Diffusion Policy, long-history Diffusion Policy, and proposed method with state-based or image-based dynamics, separated into seen and unseen objects."></figure>
           </article>
         </div>
-        <p class="result-note">The paper also reports that the correct learned representation generally lowers dynamics prediction error for Pouch Placement and Horizontal Lifting. It does not do so consistently for every Box Pushing object.</p>
+        <p class="result-note">The dynamics-model evaluation assesses whether learned representations capture object-dependent responses and can be estimated online. The left panels compare prediction errors on held-out demonstrations using the actual object's representation and alternative representations. Across validation data, the matching representation generally lowers mean prediction error for Pouch Placement and Horizontal Lifting, but not consistently for Box Pushing; the Box Pushing results also include force prediction. The right panels show online estimates for rollouts on seen objects alongside the learned representations. For unseen objects with intermediate weight positions, the paper identifies convergence between the corresponding learned representations as desirable.</p>
         <figure class="paper-figure dynamics-evaluation">
-          <img src="assets/images/dynamics-model-evaluation.png" alt="Dynamics model evaluation across Pouch Placement, Box Pushing, and Horizontal Lifting, showing prediction errors, error differences across object representations, force prediction, and online parameter estimates.">
-          <figcaption>Dynamics model evaluation across the three tasks: prediction errors, error differences between object representations, and online parameter estimates.</figcaption>
+          <img src="assets/images/dynamics-model-evaluation-cropped.png" alt="Dynamics model evaluation across Pouch Placement, Box Pushing, and Horizontal Lifting, showing prediction errors, error differences across object representations, force prediction, and online parameter estimates.">
         </figure>
       </div>
     </section>
@@ -101,23 +100,12 @@
         <article class="rollout-card">
           <h4>Diffusion Policy failure</h4>
           <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-tilted-regrasp-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-dp-failure.mp4" type="video/mp4"></video>
-          <p>The pouch tilts during placement and is not placed inside the frame.</p>
         </article>
         <article class="rollout-card">
           <h4>Pouch placed in the frame</h4>
           <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-in-frame-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-in-frame-2x.mp4" type="video/mp4"></video>
-          <p>The pouch is inside the blue frame in the final frame.</p>
         </article>
       </div>
-      <article class="rollout-group">
-        <div class="rollout-group-heading">
-          <h3>VAE reconstruction with future prediction</h3>
-          <p>The video shows the observed right-camera image and online predicted/reconstructed images at prediction horizon 16 (about 1.5 s).</p>
-        </div>
-        <div class="rollout-card reconstruction-card">
-          <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-vae-future-reconstruction.jpg"><source src="assets/videos/rollouts/pouch-vae-future-reconstruction.mp4" type="video/mp4"></video>
-        </div>
-      </article>
     </section>
 
     <section class="section rollout-section" id="rollouts">
@@ -128,12 +116,12 @@
           <article class="rollout-card">
             <h4>Baseline · failure example</h4>
             <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/box-pushing-baseline-failure-marked.jpg"><source src="assets/videos/rollouts/box-pushing-baseline-failure-marked.mp4" type="video/mp4"></video>
-            <p>Box Pushing rollout; the source asset was labeled `fail_baseline`. The opening still marks the weight position.</p>
+            <p>Baseline DP fails without re-touching.</p>
           </article>
           <article class="rollout-card">
             <h4>Proposed method</h4>
             <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/box-pushing-proposed-marked.jpg"><source src="assets/videos/rollouts/box-pushing-proposed-marked.mp4" type="video/mp4"></video>
-            <p>Paired Box Pushing rollout. The opening still marks the corresponding weight position.</p>
+            <p>Proposed + Retraining succeeds after re-touching.</p>
           </article>
         </div>
       </article>
@@ -151,6 +139,14 @@
           <p>The estimate changes as the observed object response differs from the initial prediction.</p>
           <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-estimate-poster.jpg"><source src="assets/videos/simulation/online-adaptation-estimate.mp4" type="video/mp4"></video>
         </article>
+      </div>
+    </section>
+
+    <section class="section rollout-section" id="vae-reconstruction">
+      <h2>Visualization of Online Adaptation</h2>
+      <p class="section-lead">For visualization, predicted future observations are decoded into images; the model itself predicts future visual features. The clip shows decoded frames about 1.5 s ahead and online estimates of Implicit Dynamics Parameter.</p>
+      <div class="rollout-card single-video">
+        <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-vae-future-reconstruction.jpg"><source src="assets/videos/rollouts/pouch-vae-future-reconstruction.mp4" type="video/mp4"></video>
       </div>
     </section>
 
