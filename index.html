@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Online adaptation to latent physical properties for learning manipulation from demonstration.">
+  <title>Online Adaptation to Latent Physical Properties</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>Online Adaptation to Latent Physical Properties for Learning from Demonstration</h1>
+      <p class="authors">Kotaro Kajitsuka<sup>1,2</sup>, Masaki Murooka<sup>2</sup>, and Fumio Kanehiro<sup>1,2</sup></p>
+      <p class="affiliations"><sup>1</sup>University of Tsukuba &nbsp; <sup>2</sup>AIST</p>
+      <nav class="actions" aria-label="Project links">
+        <a class="button primary" href="assets/online-adaptation-paper.pdf">Paper (PDF)</a>
+        <span class="button unavailable" aria-label="Video publication coming soon">Video · Coming Soon</span>
+      </nav>
+      <figure class="hero-figure"><img src="assets/images/approach-overview.png" alt="Figure 1: teleoperated demonstrations include adaptive actions; a dynamics model and object-specific representations are learned, and the representation is updated online from prediction errors."></figure>
+    </div>
+  </header>
+
+  <main>
+    <section class="section video-section" id="project-video">
+      <h2>Video</h2>
+      <p class="section-lead">Locally embedded research overview. The video has not been published on an external platform.</p>
+      <video controls preload="metadata" playsinline poster="assets/images/research-overview-poster.jpg">
+        <source src="assets/videos/research-overview.mp4" type="video/mp4">
+        Your browser does not support the video element.
+      </video>
+    </section>
+
+    <section class="section narrow" id="abstract">
+      <h2>Abstract</h2>
+      <p>Manipulating visually identical objects with different physical properties requires adapting actions based on information acquired through interaction. We address the problem of learning from demonstrations how to adapt manipulation actions, such as regrasping and changing contact locations, based on physical-property information acquired during interaction. To this end, we propose a learning-from-demonstration method that learns latent representations of physical properties needed to predict object responses and conditions a policy on online estimates of these representations. A dynamics model and object-specific latent representations are jointly learned from demonstrations that include behaviors adapting to the objects’ physical properties, and the learned representations are then used to condition an imitation policy. During execution, the dynamics model and policy weights remain fixed, while the latent representation is updated based on the discrepancy between predicted and actual observations, allowing interaction with the object to inform action generation. Real-world and simulation experiments with objects whose centers of mass differ demonstrate that online adaptation through latent representations of physical properties improves task success rates.</p>
+    </section>
+
+    <section class="research-summary" aria-label="Research summary">
+      <h2>How can a robot adapt to visually identical objects with different physical properties?</h2>
+      <p>Learning latent physical properties from demonstrations and updating them online to guide manipulation.</p>
+    </section>
+
+    <section class="section method-section">
+      <h2>Learning and Online Adaptation</h2>
+      <p class="section-lead">Demonstrations supervise both prediction of object responses and the actions that adapt to them.</p>
+      <figure class="figure method-figure"><img src="assets/images/training-deployment-pipeline.png" alt="Training and deployment pipeline: train a VAE and dynamics model, condition a Diffusion Policy on the learned representation, then update only the representation online from prediction error."></figure>
+      <div class="method-copy">
+          <article><h3>1. Learn object representations</h3><p>A VAE encodes images. A dynamics model predicts future visual features and proprioception from recent observations, planned actions, and a learnable representation for each object. For Box Pushing, wrist force and torque are also prediction targets.</p></article>
+          <article><h3>2. Train the policy</h3><p>The demonstrations are annotated with their learned object representations. A Diffusion Policy learns actions from observation history and the corresponding representation.</p></article>
+          <article><h3>3. Adapt during execution</h3><p>The online estimate starts from a plausible reference representation. Prediction error updates that estimate while model and policy weights remain fixed; the policy uses the updated estimate to select subsequent actions.</p></article>
+      </div>
+      <aside class="retraining-note">
+        <h3>Optional: retrain after collecting rollouts</h3>
+        <p>Rollout observations and actions, including unsuccessful attempts, can be added to the demonstrations. The VAE and dynamics model are then retrained from scratch to improve prediction and online estimation. The learned object representations and Diffusion Policy weights stay fixed, so the model can improve its physical-property estimates without retraining the policy.</p>
+      </aside>
+    </section>
+
+    <section class="section task-setup-section">
+      <h2>Experiments: Task Setup</h2>
+      <p class="section-lead">The experiments evaluate Pouch Placement, Box Pushing, and Horizontal Lifting with objects whose centers of mass vary.</p>
+      <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/experiments-task-setup-poster.jpg" aria-label="Animated task setup for Pouch Placement, Box Pushing, and Horizontal Lifting, with weight positions and seen and unseen objects.">
+        <source src="assets/videos/simulation/experiments-task-setup.mp4" type="video/mp4">
+      </video>
+    </section>
+
+    <section class="section rollout-section" id="teleoperation">
+      <h2>Teleoperation Data Collection</h2>
+      <p class="section-lead">A separate demonstration segment showing the operator handling the pouch while collecting manipulation data.</p>
+      <div class="rollout-card single-video">
+        <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-teleoperation-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-teleoperation-2x.mp4" type="video/mp4"></video>
+      </div>
+    </section>
+
+    <section class="section shaded" id="results">
+      <div class="shaded-inner">
+        <h2>Experiments and Results</h2>
+        <p class="section-lead">Objects differ in center of mass (CoM); the real pushing task also uses objects with different centers of friction. Demonstrations cover selected configurations, and Box Pushing and Horizontal Lifting evaluate additional CoM locations.</p>
+        <div class="results-grid">
+          <article class="result-card">
+            <h3>Real-robot manipulation</h3>
+            <p><strong>Pouch Placement:</strong> the proposed method reaches 66.7% success, compared with 40.7% for standard Diffusion Policy. For Box Pushing, the methods trained only on demonstrations have comparable overall success. Retraining the VAE and dynamics model with rollout data raises success by about 15 percentage points while keeping the policy fixed.</p>
+            <figure class="figure"><img src="assets/images/figure-5-real-world-success-rates.png" alt="Success rates for real-robot Pouch Placement and Box Pushing, comparing standard Diffusion Policy, the proposed method, and proposed method after retraining."><figcaption>Real-robot task success. Retraining improves Box Pushing success while the policy remains fixed.</figcaption></figure>
+          </article>
+          <article class="result-card">
+            <h3>Simulation results</h3>
+            <p>The method has a higher mean overall success rate than standard Diffusion Policy and its long-history variant with either state-based or image-based dynamics. On unseen CoM locations, both proposed variants perform better than the baselines, but success remains around 30%, leaving generalization challenging.</p>
+            <figure class="figure"><img src="assets/images/simulation-results.png" alt="Horizontal Lifting success rates for standard Diffusion Policy, long-history Diffusion Policy, and proposed method with state-based or image-based dynamics, separated into seen and unseen objects."></figure>
+          </article>
+        </div>
+        <p class="result-note">The paper also reports that the correct learned representation generally lowers dynamics prediction error for Pouch Placement and Horizontal Lifting. It does not do so consistently for every Box Pushing object.</p>
+        <figure class="paper-figure dynamics-evaluation">
+          <img src="assets/images/dynamics-model-evaluation.png" alt="Dynamics model evaluation across Pouch Placement, Box Pushing, and Horizontal Lifting, showing prediction errors, error differences across object representations, force prediction, and online parameter estimates.">
+          <figcaption>Dynamics model evaluation across the three tasks: prediction errors, error differences between object representations, and online parameter estimates.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section rollout-section" id="pouch-rollouts">
+      <h2>Pouch Placement Results</h2>
+      <p class="section-lead">Representative 2× recordings from the real-robot pouch task.</p>
+      <div class="rollout-grid two-up">
+        <article class="rollout-card">
+          <h4>Diffusion Policy failure</h4>
+          <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-tilted-regrasp-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-dp-failure.mp4" type="video/mp4"></video>
+          <p>The pouch tilts during placement and is not placed inside the frame.</p>
+        </article>
+        <article class="rollout-card">
+          <h4>Pouch placed in the frame</h4>
+          <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-placement-in-frame-2x.jpg"><source src="assets/videos/rollouts/pouch-placement-in-frame-2x.mp4" type="video/mp4"></video>
+          <p>The pouch is inside the blue frame in the final frame.</p>
+        </article>
+      </div>
+      <article class="rollout-group">
+        <div class="rollout-group-heading">
+          <h3>VAE reconstruction with future prediction</h3>
+          <p>The video shows the observed right-camera image and online predicted/reconstructed images at prediction horizon 16 (about 1.5 s).</p>
+        </div>
+        <div class="rollout-card reconstruction-card">
+          <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-vae-future-reconstruction.jpg"><source src="assets/videos/rollouts/pouch-vae-future-reconstruction.mp4" type="video/mp4"></video>
+        </div>
+      </article>
+    </section>
+
+    <section class="section rollout-section" id="rollouts">
+      <h2>Box Pushing: Baseline vs. Proposed Method</h2>
+      <p class="section-lead">A comparison of the baseline failure and a paired proposed-method example.</p>
+      <article class="rollout-group">
+        <div class="rollout-grid two-up">
+          <article class="rollout-card">
+            <h4>Baseline · failure example</h4>
+            <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/box-pushing-baseline-failure-marked.jpg"><source src="assets/videos/rollouts/box-pushing-baseline-failure-marked.mp4" type="video/mp4"></video>
+            <p>Box Pushing rollout; the source asset was labeled `fail_baseline`. The opening still marks the weight position.</p>
+          </article>
+          <article class="rollout-card">
+            <h4>Proposed method</h4>
+            <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/box-pushing-proposed-marked.jpg"><source src="assets/videos/rollouts/box-pushing-proposed-marked.mp4" type="video/mp4"></video>
+            <p>Paired Box Pushing rollout. The opening still marks the corresponding weight position.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <section class="section simulation-section" id="simulation-video">
+      <h2>Online Adaptation in Simulation</h2>
+      <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-final-slide.jpg">
+        <source src="assets/videos/simulation/online-adaptation-final-slide.mp4" type="video/mp4">
+      </video>
+    </section>
+
+    <section class="section narrow" id="bibtex">
+      <h2>BibTeX</h2>
+      <p>The manuscript is supplied as a submission draft. Venue and publication details are left unspecified pending confirmation.</p>
+      <pre><code>@unpublished{kajitsuka2026onlineadaptation,
+  title  = {Online Adaptation to Latent Physical Properties for Learning from Demonstration},
+  author = {Kajitsuka, Kotaro and Murooka, Masaki and Kanehiro, Fumio},
+  year   = {2026},
+  note   = {Manuscript submitted for SII 2027}
+}</code></pre>
+    </section>
+  </main>
+  <footer><p>Online Adaptation to Latent Physical Properties for Learning from Demonstration</p></footer>
+</body>
+</html>
