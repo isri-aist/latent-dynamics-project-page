@@ -12,7 +12,7 @@ body { margin: 0; color: var(--ink); background: #fff; font-family: Inter, "Helv
 h1, h2, h3 { line-height: 1.25; letter-spacing: -.025em; }
 .hero { padding: 58px 24px 38px; text-align: center; }
 .hero-inner, main { width: min(1100px, 100%); margin: 0 auto; }
-h1 { max-width: 980px; margin: 0 auto 20px; font-size: clamp(2rem, 4.2vw, 3.25rem); }
+h1 { max-width: 1100px; margin: 0 auto 20px; font-size: clamp(2rem, 4.2vw, 3.25rem); }
 .authors { margin: 0 auto 3px; font-size: 1.08rem; font-weight: 600; }
 .authors sup, .affiliations sup { color: var(--accent); }
 .affiliations { margin: 0 auto; color: var(--muted); font-size: .9rem; }
