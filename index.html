@@ -86,15 +86,11 @@
             <figure class="figure"><img src="assets/images/simulation-results.png" alt="Horizontal Lifting success rates for standard Diffusion Policy, long-history Diffusion Policy, and proposed method with state-based or image-based dynamics, separated into seen and unseen objects."></figure>
           </article>
         </div>
-        <p class="result-note">The dynamics-model evaluation assesses whether learned representations capture object-dependent responses and can be estimated online. The left panels compare prediction errors on held-out demonstrations using the actual object's representation and alternative representations. Across validation data, the matching representation generally lowers mean prediction error for Pouch Placement and Horizontal Lifting, but not consistently for Box Pushing; the Box Pushing results also include force prediction. The right panels show online estimates for rollouts on seen objects alongside the learned representations. For unseen objects with intermediate weight positions, the paper identifies convergence between the corresponding learned representations as desirable.</p>
-        <figure class="paper-figure dynamics-evaluation">
-          <img src="assets/images/dynamics-model-evaluation-cropped.png" alt="Dynamics model evaluation across Pouch Placement, Box Pushing, and Horizontal Lifting, showing prediction errors, error differences across object representations, force prediction, and online parameter estimates.">
-        </figure>
       </div>
     </section>
 
     <section class="section rollout-section" id="pouch-rollouts">
-      <h2>Pouch Placement Results</h2>
+      <h2>Pouch Placement: Baseline vs. Proposed Method</h2>
       <p class="section-lead">Representative 2× recordings from the real-robot pouch task.</p>
       <div class="rollout-grid two-up">
         <article class="rollout-card">
@@ -128,7 +124,7 @@
     </section>
 
     <section class="section simulation-section" id="simulation-video">
-      <h2>Online Adaptation in Simulation</h2>
+      <h2>Visualization of Online Adaptation</h2>
       <div class="rollout-grid two-up simulation-media-grid">
         <article class="rollout-card">
           <h4>Simulated rollout</h4>
@@ -140,14 +136,14 @@
           <video controls autoplay muted loop preload="metadata" playsinline poster="assets/images/online-adaptation-estimate-poster.jpg"><source src="assets/videos/simulation/online-adaptation-estimate.mp4" type="video/mp4"></video>
         </article>
       </div>
-    </section>
-
-    <section class="section rollout-section" id="vae-reconstruction">
-      <h2>Visualization of Online Adaptation</h2>
       <p class="section-lead">For visualization, predicted future observations are decoded into images; the model itself predicts future visual features. The clip shows decoded frames about 1.5 s ahead and online estimates of Implicit Dynamics Parameter.</p>
       <div class="rollout-card single-video">
         <video controls autoplay muted loop preload="none" playsinline poster="assets/images/rollout-posters/pouch-vae-future-reconstruction.jpg"><source src="assets/videos/rollouts/pouch-vae-future-reconstruction.mp4" type="video/mp4"></video>
       </div>
+      <p class="result-note">The dynamics-model evaluation assesses whether learned representations capture object-dependent responses and can be estimated online. The left panels compare prediction errors on held-out demonstrations using the actual object's representation and alternative representations. Across validation data, the matching representation generally lowers mean prediction error for Pouch Placement and Horizontal Lifting, but not consistently for Box Pushing; the Box Pushing results also include force prediction. The right panels show online estimates for rollouts on seen objects alongside the learned representations. For unseen objects with intermediate weight positions, the paper identifies convergence between the corresponding learned representations as desirable.</p>
+      <figure class="paper-figure dynamics-evaluation">
+        <img src="assets/images/dynamics-model-evaluation-cropped.png" alt="Dynamics model evaluation across Pouch Placement, Box Pushing, and Horizontal Lifting, showing prediction errors, error differences across object representations, force prediction, and online parameter estimates.">
+      </figure>
     </section>
 
     <section class="section narrow" id="bibtex">
