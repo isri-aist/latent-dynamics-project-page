@@ -2,7 +2,8 @@
 
 Static project website for Online Adaptation to Latent Physical Properties for Learning from Demonstration.
 
-Publication coming soon.
+Paper: https://arxiv.org/abs/2611.06118
+Video: https://www.youtube.com/watch?v=0Wb-mLk6VeQ
 
 ## Preview
 

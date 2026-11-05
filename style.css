@@ -17,8 +17,12 @@ h1 { max-width: 1100px; margin: 0 auto 20px; font-size: clamp(2rem, 4.2vw, 3.25r
 .authors sup, .affiliations sup { color: var(--accent); }
 .affiliations { margin: 0 auto; color: var(--muted); font-size: .9rem; }
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 24px 0 34px; }
-.button { display: inline-block; border: 1px solid #263942; border-radius: 999px; padding: 8px 19px; color: white; background: #263942; font-size: .9rem; font-weight: 650; text-decoration: none; }
+.button { display: inline-flex; align-items: center; gap: 9px; border: 1px solid #333; border-radius: 999px; padding: 8px 19px; color: white; background: #333; font-size: .9rem; font-weight: 650; text-decoration: none; }
 .button:hover { background: #405a65; }
+.button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.button svg .youtube-mark { fill: currentColor; stroke: none; }
+.button svg .icon-cutout { fill: var(--accent); stroke: none; }
+.button:hover svg .icon-cutout { fill: #405a65; }
 .button.primary { border-color: var(--accent); background: var(--accent); }
 .button.unavailable { border-style: dashed; color: #586b73; background: #fff; cursor: default; }
 figure { margin: 0; }
